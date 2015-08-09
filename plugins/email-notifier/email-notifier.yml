@@ -1,0 +1,11 @@
+connect:
+    to: localhost
+    port: 25
+    secure: False
+    timeout: 5
+
+auth:
+    username:
+    password:
+
+sender: radar@localhost
