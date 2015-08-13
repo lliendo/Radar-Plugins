@@ -23,7 +23,6 @@ from smtplib import SMTP, SMTP_SSL
 from os.path import dirname
 from socket import setdefaulttimeout, getdefaulttimeout
 from email.mime.text import MIMEText
-from copy import deepcopy
 from radar.plugin import ServerPlugin
 from radar.check import Check
 
@@ -31,9 +30,8 @@ from radar.check import Check
 class EmailNotifier(ServerPlugin):
 
     PLUGIN_NAME = 'Email notifier'
-    PLUGIN_CONFIG_FILE = dirname(__file__) + '/email-notifier.yml'
-    DEFAULT_CONFIG = deepcopy(ServerPlugin.DEFAULT_CONFIG)
-    DEFAULT_CONFIG.update({
+    PLUGIN_CONFIG_FILE = ServerPlugin.get_path(__file__, 'email-notifier.yml')
+    DEFAULT_CONFIG = {
         'connect': {
             'to': 'localhost',
             'port': 25,
@@ -47,7 +45,7 @@ class EmailNotifier(ServerPlugin):
         },
 
         'sender': 'radar@localhost',
-    })
+    }
 
     def _smtp_connect(self):
         smtp_server = None
@@ -101,7 +99,7 @@ class EmailNotifier(ServerPlugin):
         return None
 
     def _read_template(self):
-        with open(dirname(__file__) + '/email-notification.templ') as fd:
+        with open(ServerPlugin.get_path(__file__, 'email-template')) as fd:
             return fd.read()
 
     def _render_template(self, template, host, check):
