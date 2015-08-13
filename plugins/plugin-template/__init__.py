@@ -17,6 +17,8 @@ Optionally you may want to :
       default values provided users don't set certain parameters in the
       configuration file.
 
+    - Use the log() method to register any activity to the Radar's log file.
+
 If you're using a YAML configuration file you can read those values from the
 self.config dictionary.
 
