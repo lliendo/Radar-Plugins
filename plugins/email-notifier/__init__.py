@@ -76,6 +76,7 @@ class EmailNotifier(ServerPlugin):
     def _set_timeout(self):
         default_timeout = getdefaulttimeout()
         setdefaulttimeout(self.config['connect']['timeout'])
+
         return default_timeout
 
     def _restore_timeout(self, timeout):
@@ -86,6 +87,7 @@ class EmailNotifier(ServerPlugin):
         smtp_server = self._smtp_connect()
         self._smtp_login(smtp_server)
         self._restore_timeout(default_timeout)
+
         return smtp_server
 
     def _disconnect(self):
