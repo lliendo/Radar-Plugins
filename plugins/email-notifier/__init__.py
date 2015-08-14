@@ -20,7 +20,6 @@ Copyright 2015 Lucas Liendo.
 """
 
 from smtplib import SMTP, SMTP_SSL
-from os.path import dirname
 from socket import setdefaulttimeout, getdefaulttimeout
 from email.mime.text import MIMEText
 from radar.plugin import ServerPlugin
@@ -29,7 +28,7 @@ from radar.check import Check
 
 class EmailNotifier(ServerPlugin):
 
-    PLUGIN_NAME = 'Email notifier'
+    PLUGIN_NAME = 'Email-Notifier'
     PLUGIN_CONFIG_FILE = ServerPlugin.get_path(__file__, 'email-notifier.yml')
     DEFAULT_CONFIG = {
         'connect': {
@@ -105,10 +104,16 @@ class EmailNotifier(ServerPlugin):
             return fd.read()
 
     def _render_template(self, template, host, check):
-        return template.format(
-            host_address=host, path=check.path, args=check.args, details=check.details,
-            status=check.check_status, previous_status=check.previous_check_status
-        )
+        d = {
+            'host': host,
+            'path': check.path,
+            'args': check.args,
+            'details': check.details,
+            'current status': Check.get_status(check.current_status),
+            'previous status': Check.get_status(check.previous_status)
+        }
+
+        return template.format(**d)
 
     def _build_email(self, host, check, contacts):
         template = self._read_template()
@@ -120,7 +125,7 @@ class EmailNotifier(ServerPlugin):
         return email
 
     def _should_notify(self, check):
-        return (check.status != Check.STATUS['OK']) or (check.previous_status != Check.STATUS['OK'])
+        return (check.current_status != Check.STATUS['OK']) or (check.previous_status != Check.STATUS['OK'])
 
     def _notify(self, host, checks, contacts):
         emails = [self._build_email(host, c, contacts) for c in checks if self._should_notify(c)]

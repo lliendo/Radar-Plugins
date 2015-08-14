@@ -1,7 +1,7 @@
 Notification details :
 ----------------------
-    Host : {host_address}.
+    Host : {host}.
     Check : {path} {args}.
-    Status : {status}.
-    Previous status : {previous_status}.
+    Current status : {current status}.
+    Previous status : {previous status}.
     Check details : {details}.
