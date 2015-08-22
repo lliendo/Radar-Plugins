@@ -23,8 +23,7 @@ If you're using a YAML configuration file you can read those values from the
 self.config dictionary.
 
 
-Also remember that you can read checks and contacts attributes to achieve your
-plugin's goal.
+Also remember that you can read checks and contacts attributes.
 
 Check attributes :
 ------------------
