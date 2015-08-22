@@ -34,7 +34,7 @@ Installation
 Tests
 -----
 
-    Radar plugins uses `Tox <http://codespeak.net/tox/>` to run its tests.
+    Radar-Plugins uses `Tox <http://codespeak.net/tox/>` to run its tests.
     To install Tox, from the command line run :
 
         .. code-block:: bash
@@ -42,7 +42,7 @@ Tests
             pip install tox
 
 
-    To run tests, clone the this repository and run Tox.
+    To run the tests, clone the this repository and run Tox.
 
         .. code-block:: bash
 
