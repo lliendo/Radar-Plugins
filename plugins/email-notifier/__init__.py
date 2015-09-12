@@ -104,16 +104,14 @@ class EmailNotifier(ServerPlugin):
             return fd.read()
 
     def _render_template(self, template, host, check):
-        d = {
+        return template.format({
             'host': host,
             'path': check.path,
             'args': check.args,
             'details': check.details,
             'current status': Check.get_status(check.current_status),
             'previous status': Check.get_status(check.previous_status)
-        }
-
-        return template.format(**d)
+        })
 
     def _build_email(self, host, check, contacts):
         template = self._read_template()
