@@ -37,7 +37,7 @@ want to add to your Radar client's plugins directory.
 Tests
 -----
 
-You'll need to have `Nose <https://https://github.com/lliendo/Radar>`_ installed on your system to run these tests.
+You'll need to have `Radar <https://https://github.com/lliendo/Radar>`_ installed on your system to run these tests.
 
 Radar-Plugins uses `Nose <https://nose.readthedocs.org/en/latest/>`_ to run its tests.
 To install Nose, from the command line run :
