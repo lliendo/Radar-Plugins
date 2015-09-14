@@ -27,12 +27,17 @@ Documentation
 Installation
 ------------
 
-Manually copy the plugins (which are contained in the plugins directory) you
+Clone this repository to a temporary directory using `GIT <https://git-scm.com/>`_ (or alternatively download
+as .zip).
+
+Now manually copy the plugins (which are contained in the plugins directory) you
 want to add to your Radar client's plugins directory.
 
 
 Tests
 -----
+
+You'll need to have `Nose <https://https://github.com/lliendo/Radar>`_ installed on your system to run these tests.
 
 Radar-Plugins uses `Nose <https://nose.readthedocs.org/en/latest/>`_ to run its tests.
 To install Nose, from the command line run :
@@ -46,14 +51,14 @@ To run the tests, clone the this repository and run Nose.
 .. code-block:: bash
 
     git clone https://github.com/lliendo/Radar-Plugins.git
-    cd Radar-Checks
+    cd Radar-Plugins
     nosetests
 
 
 License
 -------
 
-Radar plugins are distributed under the LGPL v3 license.
+Radar plugins are distributed under the `GNU LGPLv3 <https://www.gnu.org/licenses/lgpl.txt>`_ license.
 
 
 Authors
