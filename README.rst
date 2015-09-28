@@ -31,7 +31,7 @@ Clone this repository to a temporary directory using `GIT <https://git-scm.com/>
 as .zip).
 
 Now manually copy the plugins (which are contained in the plugins directory) you
-want to add to your Radar client's plugins directory.
+want to add to your Radar server's plugins directory.
 
 
 Tests
