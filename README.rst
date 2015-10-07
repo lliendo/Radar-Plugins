@@ -5,6 +5,7 @@ This repository contains (currently) only one plugin and a plugin template
 (which you can use as a starting point to develop a plugin) :
 
 * Email-Notifier.
+* UDP-Proxy.
 * Plugin-Template.
 
 
@@ -17,6 +18,11 @@ Documentation
   notification details that you'll receive each time a contact is notified.
   This simple plugin will notify your contacts whenever the current or
   previous status of a check is not OK.
+
+* UDP-Proxy is a very small plugin that allows you to forward check replies to
+  a UDP socket. It might not be really useful but it has been included here as
+  an example to show you how to read a configuration from a YAML using the
+  Radar's plugin API.
 
 * Plugin-Template includes just a Python plugin template that you can use to
   start playing around with Radar plugin development. It contains all the
