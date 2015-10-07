@@ -61,6 +61,15 @@ Contact attributes :
     - phone : Contains a string of the contact's phone number. It may be
       empty if it wasn't defined in the contact's definition.
 
+
+To convert the numerical value of current_status or previous_status attributes
+from the Check class you should use the Check.get_status() static method
+available from the radar.check module. To use simply add this import :
+
+    from radar.check import Check
+
+to your plugin's code.
+
 """
 
 
