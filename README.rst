@@ -34,7 +34,7 @@ Installation
 ------------
 
 Clone this repository to a temporary directory using `GIT <https://git-scm.com/>`_ (or alternatively download
-as .zip).
+as `.zip <https://github.com/lliendo/Radar-Plugins/archive/master.zip>`_).
 
 Now manually copy the plugins (which are contained in the plugins directory) you
 want to add to your Radar server's plugins directory.
