@@ -1,8 +1,7 @@
 Radar plugins
 =============
 
-This repository contains (currently) only one plugin and a plugin template
-(which you can use as a starting point to develop a plugin) :
+This repository contains a few demonstrative plugins for Radar :
 
 * Email-Notifier.
 * UDP-Proxy.
@@ -43,7 +42,7 @@ want to add to your Radar server's plugins directory.
 Tests
 -----
 
-You'll need to have `Radar <https://https://github.com/lliendo/Radar>`_ installed on your system to run these tests.
+You'll need to have `Radar <https://github.com/lliendo/Radar>`_ installed on your system to run these tests.
 
 Radar-Plugins uses `Nose <https://nose.readthedocs.org/en/latest/>`_ to run its tests.
 To install Nose, from the command line run :
