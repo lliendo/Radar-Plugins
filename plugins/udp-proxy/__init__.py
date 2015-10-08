@@ -48,8 +48,8 @@ class ProxyPlugin(ServerPlugin):
         def _forward(self, address, checks, contacts):
             serialized = {
                 'address': address,
-                'checks': checks,
-                'contacts': contacts,
+                'checks': [c.to_dict() for c in checks],
+                'contacts': [c.to_dict() for c in contacts],
             }
 
             self._fd.sendto(dumps(serialized) + '\n', (self.config['forward']['to'], self.config['forward']['port']))
