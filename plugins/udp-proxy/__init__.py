@@ -35,7 +35,7 @@ class ProxyPlugin(ServerPlugin):
             try:
                 fd = socket(AF_INET, SOCK_DGRAM)
             except Exception, e:
-                self.log('Error - Couldn\'t create UDP socket. Details : {:}.', e)
+                self.log('Error - Couldn\'t create UDP socket. Details : {:}.'.format(e))
 
             return fd
 
