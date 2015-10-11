@@ -26,7 +26,7 @@ from radar.plugin import ServerPlugin
 
 class ProxyPlugin(ServerPlugin):
 
-        PLUGIN_NAME = 'Proxy plugin'
+        PLUGIN_NAME = 'UDP-Proxy'
         PLUGIN_CONFIG_FILE = ServerPlugin.get_path(__file__, 'udp-proxy.yml')
 
         def _create_socket(self):
