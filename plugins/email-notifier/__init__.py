@@ -104,7 +104,7 @@ class EmailNotifier(ServerPlugin):
             return fd.read()
 
     def _render_template(self, template, host, check):
-        return template.format({
+        return template.format(**{
             'host': host,
             'path': check.path,
             'args': check.args,
