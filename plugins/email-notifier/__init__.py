@@ -39,8 +39,8 @@ class EmailNotifier(ServerPlugin):
         },
 
         'auth': {
-            'username': '',
-            'password': '',
+            'username': None,
+            'password': None,
         },
 
         'sender': 'radar@localhost',
@@ -64,7 +64,7 @@ class EmailNotifier(ServerPlugin):
         return smtp_server
 
     def _smtp_login(self, smtp_server):
-        if (self.config['auth']['username'] != '') and (self.config['auth']['password'] != ''):
+        if (self.config['auth']['username'] != None) and (self.config['auth']['password'] != None):
             try:
                 smtp_server.login(self.config['auth']['username'], self.config['auth']['password'])
             except Exception, e:
