@@ -26,42 +26,48 @@ from radar.plugin import ServerPlugin
 
 class UDPProxyPlugin(ServerPlugin):
 
-        PLUGIN_NAME = 'UDP-Proxy'
-        PLUGIN_CONFIG_FILE = ServerPlugin.get_path(__file__, 'udp-proxy.yml')
+    PLUGIN_NAME = 'UDP-Proxy'
+    PLUGIN_CONFIG_FILE = ServerPlugin.get_path(__file__, 'udp-proxy.yml')
+    DEFAULT_CONFIG = {
+        'forward': {
+            'to': '127.0.0.1',
+            'port': 2000,
+        }
+    }
 
-        def _create_socket(self):
-            fd = None
+    def _create_socket(self):
+        fd = None
 
-            try:
-                fd = socket(AF_INET, SOCK_DGRAM)
-            except Exception, e:
-                self.log('Error - Couldn\'t create UDP socket. Details : {:}.'.format(e))
+        try:
+            fd = socket(AF_INET, SOCK_DGRAM)
+        except Exception, e:
+            self.log('Error - Couldn\'t create UDP socket. Details : {:}.'.format(e))
 
-            return fd
+        return fd
 
-        def _disconnect(self):
-            self._fd.close()
+    def _disconnect(self):
+        self._fd.close()
 
-        def on_start(self):
-            self._fd = self._create_socket()
+    def on_start(self):
+        self._fd = self._create_socket()
 
-        def _forward(self, address, checks, contacts):
-            serialized = {
-                'address': address,
-                'checks': [c.to_dict() for c in checks],
-                'contacts': [c.to_dict() for c in contacts],
-            }
+    def _forward(self, address, checks, contacts):
+        serialized = {
+            'address': address,
+            'checks': [c.to_dict() for c in checks],
+            'contacts': [c.to_dict() for c in contacts],
+        }
 
-            payload = dumps(serialized) + '\n'
-            self._fd.sendto(payload, (self.config['forward']['to'], self.config['forward']['port']))
+        payload = dumps(serialized) + '\n'
+        self._fd.sendto(payload, (self.config['forward']['to'], self.config['forward']['port']))
 
-            return payload
+        return payload
 
-        def on_check_reply(self, address, port, checks, contacts):
-            try:
-                self._forward(address, checks, contacts)
-            except Exception, e:
-                self.log('Error - Couldn\'t forward data. Details : {:}.'.format(e))
+    def on_check_reply(self, address, port, checks, contacts):
+        try:
+            self._forward(address, checks, contacts)
+        except Exception, e:
+            self.log('Error - Couldn\'t forward data. Details : {:}.'.format(e))
 
-        def on_shutdown(self):
-            self._disconnect()
+    def on_shutdown(self):
+        self._disconnect()
