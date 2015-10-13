@@ -28,7 +28,7 @@ from radar.contact import Contact
 from plugins.email_notifier import EmailNotifier
 
 
-class TestEmailNotifier(TestCase):
+class TestEmailNotifierPlugin(TestCase):
     def setUp(self):
         m = Mock()
         self.email_notifier = EmailNotifier()
