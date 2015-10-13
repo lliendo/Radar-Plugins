@@ -64,13 +64,12 @@ class EmailNotifier(ServerPlugin):
         return smtp_server
 
     def _smtp_login(self, smtp_server):
-        if (self.config['auth']['username'] != None) and (self.config['auth']['password'] != None):
-            try:
-                smtp_server.login(self.config['auth']['username'], self.config['auth']['password'])
-            except Exception, e:
-                self.log('Error - Couldn\'t login to {:}:{:}. Details : {:}'.format(
-                    self.config['connect']['to'], self.config['connect']['port'], e)
-                )
+        try:
+            smtp_server.login(self.config['auth']['username'], self.config['auth']['password'])
+        except Exception, e:
+            self.log('Error - Couldn\'t login to {:}:{:}. Details : {:}'.format(
+                self.config['connect']['to'], self.config['connect']['port'], e)
+            )
 
     def _set_timeout(self):
         default_timeout = getdefaulttimeout()
@@ -81,10 +80,16 @@ class EmailNotifier(ServerPlugin):
     def _restore_timeout(self, timeout):
         setdefaulttimeout(timeout)
 
+    def _should_login(self):
+        return (self.config['auth']['username'] is not None) and (self.config['auth']['password'] is not None)
+
     def _connect(self):
         default_timeout = self._set_timeout()
         smtp_server = self._smtp_connect()
-        self._smtp_login(smtp_server)
+
+        if self._should_login():
+            self._smtp_login(smtp_server)
+
         self._restore_timeout(default_timeout)
 
         return smtp_server
