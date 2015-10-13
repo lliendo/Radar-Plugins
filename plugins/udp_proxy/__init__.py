@@ -24,7 +24,7 @@ from json import dumps
 from radar.plugin import ServerPlugin
 
 
-class ProxyPlugin(ServerPlugin):
+class UDPProxyPlugin(ServerPlugin):
 
         PLUGIN_NAME = 'UDP-Proxy'
         PLUGIN_CONFIG_FILE = ServerPlugin.get_path(__file__, 'udp-proxy.yml')
@@ -52,13 +52,16 @@ class ProxyPlugin(ServerPlugin):
                 'contacts': [c.to_dict() for c in contacts],
             }
 
-            self._fd.sendto(dumps(serialized) + '\n', (self.config['forward']['to'], self.config['forward']['port']))
+            payload = dumps(serialized) + '\n'
+            self._fd.sendto(payload, (self.config['forward']['to'], self.config['forward']['port']))
+
+            return payload
 
         def on_check_reply(self, address, port, checks, contacts):
             try:
                 self._forward(address, checks, contacts)
             except Exception, e:
-                self.log('Error - Couldn\'t send data. Details : {:}.'.format(e))
+                self.log('Error - Couldn\'t forward data. Details : {:}.'.format(e))
 
         def on_shutdown(self):
             self._disconnect()
