@@ -20,45 +20,19 @@ Copyright 2015 Lucas Liendo.
 """
 
 
-from unittest import TestCase
 from nose.tools import raises
 from mock import MagicMock
 from json import loads
-from radar.check import Check
-from radar.contact import Contact
 from plugins.udp_proxy import UDPProxyPlugin
+from . import TestPlugin
 
 
-class TestUDDProxyPlugin(TestCase):
+class TestUDDProxyPlugin(TestPlugin):
     def setUp(self):
         self.udp_proxy = UDPProxyPlugin()
         self.udp_proxy.log = MagicMock()
-
-        self.checks = [
-            Check(
-                name='Disk usage',
-                path='disk-usage.py',
-                args='-p / -O 0,8 -W 8,10 -u gib',
-                details='Total : 18.21, in use : 7.87, free : 9.39'
-            ),
-            Check(
-                name='Uptime',
-                path='uptime.py',
-                args='-S 300',
-                details='0 days 4 hours 47 minutes'
-            ),
-            Check(
-                name='Ram usage',
-                path='ram-usage.py',
-                args='-O 0,1000 -W 1000,1900',
-                details='Total : 1984.06, in use : 1811.91, available : 847.33'
-            ),
-        ]
-
-        self.contacts = [
-            Contact(name='Hernan', email='hernan@invader'),
-            Contact(name='Lucas', email='lucas@invader'),
-        ]
+        self.checks = self._get_test_checks()
+        self.contacts = self._get_test_contacts()
 
     @raises(Exception)
     def test_create_socket_raises_error(self):
