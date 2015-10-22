@@ -1,11 +1,15 @@
+.. image:: https://codeclimate.com/github/lliendo/Radar-Plugins/badges/gpa.svg
+   :target: https://codeclimate.com/github/lliendo/Radar-Plugins
+   :alt: Code Climate
+
+
 Radar plugins
 =============
 
-This repository contains a few demonstrative plugins for Radar :
+This repository contains demonstrative plugins for Radar :
 
 * Email-Notifier.
 * UDP-Proxy.
-* Plugin-Template.
 
 
 Documentation
@@ -51,7 +55,7 @@ To install Nose, from the command line run :
     
     pip install nose
 
-To run the tests, clone the this repository and run Nose.
+To run the tests, clone this repository and run Nose :
 
 .. code-block:: bash
 
