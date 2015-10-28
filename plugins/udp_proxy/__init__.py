@@ -40,7 +40,7 @@ class UDPProxyPlugin(ServerPlugin):
 
         try:
             fd = socket(AF_INET, SOCK_DGRAM)
-        except Exception, e:
+        except Exception as e:
             self.log('Error - Couldn\'t create UDP socket. Details : {:}.'.format(e))
 
         return fd
@@ -66,7 +66,7 @@ class UDPProxyPlugin(ServerPlugin):
     def on_check_reply(self, address, port, checks, contacts):
         try:
             self._forward(address, checks, contacts)
-        except Exception, e:
+        except Exception as e:
             self.log('Error - Couldn\'t forward data. Details : {:}.'.format(e))
 
     def on_shutdown(self):

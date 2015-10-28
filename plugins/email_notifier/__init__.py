@@ -56,7 +56,7 @@ class EmailNotifier(ServerPlugin):
 
         try:
             smtp_server = SMTPServer(self.config['connect']['to'], self.config['connect']['port'])
-        except Exception, e:
+        except Exception as e:
             self.log('Error - Couldn\'t connect to {:}:{:}. Details : {:}'.format(
                 self.config['connect']['to'], self.config['connect']['port'], e)
             )
@@ -66,7 +66,7 @@ class EmailNotifier(ServerPlugin):
     def _smtp_login(self, smtp_server):
         try:
             smtp_server.login(self.config['auth']['username'], self.config['auth']['password'])
-        except Exception, e:
+        except Exception as e:
             self.log('Error - Couldn\'t login to {:}:{:}. Details : {:}'.format(
                 self.config['connect']['to'], self.config['connect']['port'], e)
             )
@@ -97,7 +97,7 @@ class EmailNotifier(ServerPlugin):
     def _disconnect(self):
         try:
             self._smtp_server.quit()
-        except Exception, e:
+        except Exception as e:
             self.log('Error - Couldn\'t disconnect from {:}:{:}. Details : {:}'.format(
                 self.config['connect']['to'], self.config['connect']['port'], e)
             )
@@ -136,7 +136,7 @@ class EmailNotifier(ServerPlugin):
 
         try:
             [self._smtp_server.sendmail(self.config['sender'], recipients, e.as_string()) for e in emails]
-        except Exception, e:
+        except Exception as e:
             self.log('Error - Couldn\'t send notifications. Details : {:}.'.format(e))
 
     def on_check_reply(self, address, port, checks, contacts):
