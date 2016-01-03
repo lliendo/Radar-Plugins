@@ -36,14 +36,14 @@ class UDPProxyPlugin(ServerPlugin):
     }
 
     def _create_socket(self):
-        fd = None
+        _fd = None
 
         try:
-            fd = socket(AF_INET, SOCK_DGRAM)
+            _fd = socket(AF_INET, SOCK_DGRAM)
         except Exception as e:
             self.log('Error - Couldn\'t create UDP socket. Details : {:}.'.format(e))
 
-        return fd
+        return _fd
 
     def _disconnect(self):
         self._fd.close()
