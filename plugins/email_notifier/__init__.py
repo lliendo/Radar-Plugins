@@ -56,9 +56,9 @@ class EmailNotifier(ServerPlugin):
 
         try:
             smtp_server = SMTPServer(self.config['connect']['to'], self.config['connect']['port'])
-        except Exception as e:
+        except Exception as error:
             self.log('Error - Couldn\'t connect to {:}:{:}. Details : {:}'.format(
-                self.config['connect']['to'], self.config['connect']['port'], e)
+                self.config['connect']['to'], self.config['connect']['port'], error)
             )
 
         return smtp_server
@@ -66,9 +66,9 @@ class EmailNotifier(ServerPlugin):
     def _smtp_login(self, smtp_server):
         try:
             smtp_server.login(self.config['auth']['username'], self.config['auth']['password'])
-        except Exception as e:
+        except Exception as error:
             self.log('Error - Couldn\'t login to {:}:{:}. Details : {:}'.format(
-                self.config['connect']['to'], self.config['connect']['port'], e)
+                self.config['connect']['to'], self.config['connect']['port'], error)
             )
 
     def _set_timeout(self):
@@ -97,9 +97,9 @@ class EmailNotifier(ServerPlugin):
     def _disconnect(self):
         try:
             self._smtp_server.quit()
-        except Exception as e:
+        except Exception as error:
             self.log('Error - Couldn\'t disconnect from {:}:{:}. Details : {:}'.format(
-                self.config['connect']['to'], self.config['connect']['port'], e)
+                self.config['connect']['to'], self.config['connect']['port'], error)
             )
 
         return None
@@ -123,7 +123,7 @@ class EmailNotifier(ServerPlugin):
         email = MIMEText(self._render_template(template, host, check))
         email['Subject'] = 'Radar notification : {:} - {:}'.format(check.name, host)
         email['From'] = self.config['sender']
-        email['To'] = ', '.join([c.email for c in contacts])
+        email['To'] = ', '.join([contact.email for contact in contacts])
 
         return email
 
@@ -131,13 +131,13 @@ class EmailNotifier(ServerPlugin):
         return (check.current_status != Check.STATUS['OK']) or (check.previous_status != Check.STATUS['OK'])
 
     def _notify(self, host, checks, contacts):
-        emails = [self._build_email(host, c, contacts) for c in checks if self._should_notify(c)]
-        recipients = [c.email for c in contacts]
+        emails = [self._build_email(host, check, contacts) for check in checks if self._should_notify(check)]
+        recipients = [contact.email for contact in contacts]
 
         try:
-            [self._smtp_server.sendmail(self.config['sender'], recipients, e.as_string()) for e in emails]
-        except Exception as e:
-            self.log('Error - Couldn\'t send notifications. Details : {:}.'.format(e))
+            [self._smtp_server.sendmail(self.config['sender'], recipients, email.as_string()) for email in emails]
+        except Exception as error:
+            self.log('Error - Couldn\'t send notifications. Details : {:}.'.format(error))
 
     def on_check_reply(self, address, port, checks, contacts):
         self._smtp_server = self._connect()

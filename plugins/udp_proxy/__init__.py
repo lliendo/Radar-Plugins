@@ -36,14 +36,14 @@ class UDPProxyPlugin(ServerPlugin):
     }
 
     def _create_socket(self):
-        _fd = None
+        fd = None
 
         try:
-            _fd = socket(AF_INET, SOCK_DGRAM)
-        except Exception as e:
-            self.log('Error - Couldn\'t create UDP socket. Details : {:}.'.format(e))
+            fd = socket(AF_INET, SOCK_DGRAM)
+        except Exception as error:
+            self.log('Error - Couldn\'t create UDP socket. Details : {:}.'.format(error))
 
-        return _fd
+        return fd
 
     def _disconnect(self):
         self._fd.close()
@@ -54,8 +54,8 @@ class UDPProxyPlugin(ServerPlugin):
     def _forward(self, address, checks, contacts):
         serialized = {
             'address': address,
-            'checks': [c.to_dict() for c in checks],
-            'contacts': [c.to_dict() for c in contacts],
+            'checks': [check.to_dict() for check in checks],
+            'contacts': [contact.to_dict() for contact in contacts],
         }
 
         payload = dumps(serialized) + '\n'
@@ -66,8 +66,8 @@ class UDPProxyPlugin(ServerPlugin):
     def on_check_reply(self, address, port, checks, contacts):
         try:
             self._forward(address, checks, contacts)
-        except Exception as e:
-            self.log('Error - Couldn\'t forward data. Details : {:}.'.format(e))
+        except Exception as error:
+            self.log('Error - Couldn\'t forward data. Details : {:}.'.format(error))
 
     def on_shutdown(self):
         self._disconnect()
